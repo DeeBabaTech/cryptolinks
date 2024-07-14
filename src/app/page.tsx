@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { Section, Cell, List, Placeholder } from '@telegram-apps/telegram-ui';
-import { useInitData } from '@telegram-apps/sdk-react';
+import { useInitData, type User } from '@telegram-apps/sdk-react';
 
 export default function Home() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const initData = useInitData();
 
   useEffect(() => {
