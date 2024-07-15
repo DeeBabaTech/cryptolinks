@@ -6,65 +6,75 @@ import { useInitData, type User } from '@telegram-apps/sdk-react';
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
-  const [showWelcome, setShowWelcome] = useState(false);
-  const [showPremiumCheck, setShowPremiumCheck] = useState(false);
+  const [loadingStage, setLoadingStage] = useState(0); // 0: fetching user data, 1: verifying, 2: getting things ready
+  const [progress, setProgress] = useState(0);
   const initData = useInitData();
 
   useEffect(() => {
     if (initData && initData.user) {
       setUser(initData.user);
-      setTimeout(() => setShowWelcome(true), 1000); // Show welcome message after 1 second
     }
   }, [initData]);
 
   useEffect(() => {
-    if (showWelcome) {
-      setTimeout(() => setShowPremiumCheck(true), 5000); // Show premium check animation after 2 seconds
+    if (loadingStage < 3) {
+      const interval = setInterval(() => {
+        setProgress((prevProgress) => {
+          if (prevProgress < 100) {
+            return prevProgress + 1;
+          } else {
+            clearInterval(interval);
+            setLoadingStage((prevStage) => prevStage + 1);
+            setProgress(0);
+            return 0;
+          }
+        });
+      }, 20); // Adjust the speed as necessary
+      return () => clearInterval(interval);
     }
-  }, [showWelcome]);
+  }, [loadingStage]);
 
   if (!user) {
     return (
-      <Placeholder
-        header="Loading"
-        description="Fetching user data..."
-      >
-        <img
-          alt="Loading"
-          src="https://xelene.me/telegram.gif"
-          style={{ display: 'block', width: '144px', height: '144px' }}
-        />
-      </Placeholder>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <Placeholder
+            header="Loading"
+            description="Fetching user data..."
+          >
+            <progress style={{ width: '100%' }} value={progress} max="100" />
+          </Placeholder>
+        </div>
+      </div>
     );
   }
 
-  if (!showWelcome) {
-    return (
-      <Placeholder
-        header="Welcome!"
-        description="Getting things ready..."
-      >
-        <img
-          alt="Welcome"
-          src="https://xelene.me/welcome.gif" // Add a welcome gif if you have one
-          style={{ display: 'block', width: '144px', height: '144px' }}
-        />
-      </Placeholder>
-    );
-  }
+  if (loadingStage < 3) {
+    let header = '';
+    let description = '';
 
-  if (!showPremiumCheck) {
+    if (loadingStage === 0) {
+      header = 'Fetching User Data';
+      description = 'Please wait...';
+    } else if (loadingStage === 1) {
+      header = 'Verifying Information';
+      description = 'Please wait...';
+    } else if (loadingStage === 2) {
+      header = 'Getting Things Ready';
+      description = 'Please wait...';
+    }
+
     return (
-      <Placeholder
-        header="Checking Premium Status"
-        description="Please wait..."
-      >
-        <img
-          alt="Checking"
-          src="https://xelene.me/checking.gif" // Add a premium check gif if you have one
-          style={{ display: 'block', width: '144px', height: '144px' }}
-        />
-      </Placeholder>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <Placeholder
+            header={header}
+            description={description}
+          >
+            <progress style={{ width: '100%' }} value={progress} max="100" />
+          </Placeholder>
+        </div>
+      </div>
     );
   }
 
