@@ -19,7 +19,7 @@ export default function Home() {
 
   useEffect(() => {
     if (showWelcome) {
-      setTimeout(() => setShowPremiumCheck(true), 2000); // Show premium check animation after 2 seconds
+      setTimeout(() => setShowPremiumCheck(true), 5000); // Show premium check animation after 2 seconds
     }
   }, [showWelcome]);
 
