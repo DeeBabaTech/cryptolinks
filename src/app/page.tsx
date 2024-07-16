@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Section, Cell, List, Placeholder } from '@telegram-apps/telegram-ui';
+import { Section, Cell, List, Placeholder, Avatar } from '@telegram-apps/telegram-ui';
 import { useInitData, type User } from '@telegram-apps/sdk-react';
 
 export default function Home() {
@@ -36,8 +36,8 @@ export default function Home() {
 
   if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
+      <div className="flex items-center justify-center min-h-screen w-full">
+        <div className="text-center" style={{ marginTop: '2rem' }}>
           <Placeholder
             header="Loading"
             description="Fetching user data..."
@@ -49,47 +49,24 @@ export default function Home() {
     );
   }
 
-  if (loadingStage < 3) {
-    let header = '';
-    let description = '';
-
-    if (loadingStage === 0) {
-      header = 'Fetching User Data';
-      description = 'Please wait...';
-    } else if (loadingStage === 1) {
-      header = 'Verifying Information';
-      description = 'Please wait...';
-    } else if (loadingStage === 2) {
-      header = 'Getting Things Ready';
-      description = 'Please wait...';
-    }
-
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <Placeholder
-            header={header}
-            description={description}
-          >
-            <progress style={{ width: '100%' }} value={progress} max="100" />
-          </Placeholder>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <List>
-      <Section header={`Welcome, ${user.firstName}!`}>
-        <Cell subtitle="Here are your details:">
-          <div><strong>ID:</strong> {user.id}</div>
-          <div><strong>Username:</strong> {user.username}</div>
-          <div><strong>First Name:</strong> {user.firstName}</div>
-          <div><strong>Last Name:</strong> {user.lastName}</div>
-          <div><strong>Language Code:</strong> {user.languageCode}</div>
-          <div><strong>Is Premium:</strong> {user.isPremium ? 'Yes' : 'No'}</div>
-        </Cell>
-      </Section>
-    </List>
+    <div className="min-h-screen flex flex-col justify-center items-center">
+      <Avatar
+        size={96}
+        src={user.photoUrl || 'https://avatars.githubusercontent.com/u/84640980?v=4'} // Default image if photoUrl is not available
+      />
+      <List className="w-full mt-4">
+        <Section header={`Welcome, ${user.firstName}!`}>
+          <Cell subtitle="Here are your details:">
+            <div><strong>ID:</strong> {user.id}</div>
+            <div><strong>Username:</strong> {user.username}</div>
+            <div><strong>First Name:</strong> {user.firstName}</div>
+            <div><strong>Last Name:</strong> {user.lastName}</div>
+            <div><strong>Language Code:</strong> {user.languageCode}</div>
+            <div><strong>Is Premium:</strong> {user.isPremium ? 'Yes' : 'No'}</div>
+          </Cell>
+        </Section>
+      </List>
+    </div>
   );
 }
