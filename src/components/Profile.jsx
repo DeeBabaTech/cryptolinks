@@ -74,9 +74,9 @@ const Profile = ({ user }) => {
 
   return (
     <List className="w-full mt-4 p-4 shadow-md rounded-lg">
-      <div className="flex flex-col items-center">
+      <div className="flex">
         {/* Profile Avatar and Premium Badge */}
-        <div className="relative mb-4" onClick={handleAvatarClick}>
+        <div className="relative mr-8" onClick={handleAvatarClick}>
           <Avatar
             className="animated-avatar cursor-pointer border-2 border-gray-300 rounded-full"
             fallbackIcon={<span>👤</span>}
@@ -91,48 +91,48 @@ const Profile = ({ user }) => {
         </div>
 
         {/* User Information */}
-        <div className="text-center mb-4">
-          <div className="text-lg font-bold">
+        <div className="flex-1">
+          <div className="text-lg font-bold mb-2">
             {user.firstName} {user.lastName}
             {user.isPremium && <span className="text-blue-500"> ⭐</span>}
           </div>
-          <div className="text-gray-500">@{user.username}</div>
-          <div className="text-sm text-gray-700 mt-2 cursor-pointer" onClick={handleLevelClick}>
+          <div className="text-gray-500 mb-2">@{user.username}</div>
+          <div className="text-sm text-gray-700 mb-4 cursor-pointer" onClick={handleLevelClick}>
             Level: {getLevel(userPoints)}
           </div>
-        </div>
 
-        {/* Follow Information */}
-        <div className="flex mb-4 space-x-4">
-          <div className="text-center">
-            <div className="font-bold">Followers</div>
-            <div className="text-gray-500">123</div> {/* Replace with actual data */}
+          {/* Follow Information */}
+          <div className="flex space-x-4 mb-4">
+            <div>
+              <div className="font-bold">Followers</div>
+              <div className="text-gray-500">123</div> {/* Replace with actual data */}
+            </div>
+            <div>
+              <div className="font-bold">Following</div>
+              <div className="text-gray-500">456</div> {/* Replace with actual data */}
+            </div>
           </div>
-          <div className="text-center">
-            <div className="font-bold">Following</div>
-            <div className="text-gray-500">456</div> {/* Replace with actual data */}
+
+          {/* Invite Button */}
+          <div className="mb-4">
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+              Invite More
+            </button>
           </div>
-        </div>
 
-        {/* Invite Button */}
-        <div className="mb-4">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-            Invite More
-          </button>
-        </div>
+          {/* Achievements */}
+          <div className="mb-4">
+            <div className="font-bold mb-2">Achievements</div>
+            <div>🏆 <strong>Points Earned:</strong> {userPoints}</div> {/* Replace with actual data */}
+            <div>🥇 <strong>Top Rank:</strong> #1</div> {/* Replace with actual data */}
+          </div>
 
-        {/* Achievements */}
-        <div className="w-full mb-4">
-          <div className="text-center font-bold mb-2">Achievements</div>
-          <div className="text-center">🏆 <strong>Points Earned:</strong> {userPoints}</div> {/* Replace with actual data */}
-          <div className="text-center">🥇 <strong>Top Rank:</strong> #1</div> {/* Replace with actual data */}
-        </div>
-
-        {/* Recent Activity */}
-        <div className="w-full mb-4">
-          <div className="text-center font-bold mb-2">Recent Activity</div>
-          <div className="text-center">✔️ Completed daily reward task</div> {/* Replace with actual data */}
-          <div className="text-center">✔️ Followed new user @example</div> {/* Replace with actual data */}
+          {/* Recent Activity */}
+          <div>
+            <div className="font-bold mb-2">Recent Activity</div>
+            <div>✔️ Completed daily reward task</div> {/* Replace with actual data */}
+            <div>✔️ Followed new user @example</div> {/* Replace with actual data */}
+          </div>
         </div>
       </div>
 
