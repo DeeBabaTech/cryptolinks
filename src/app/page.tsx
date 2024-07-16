@@ -1,20 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Section, Cell, List, Placeholder, Avatar, Tabbar, Spinner } from '@telegram-apps/telegram-ui';
+import { Section, Cell, List, Tabbar, Spinner, Avatar } from '@telegram-apps/telegram-ui';
 import { useInitData, type User } from '@telegram-apps/sdk-react';
 
 // Define navigation tabs
 const tabs = [
   { id: 'profile', text: 'Profile', Icon: () => <Avatar size={24} src="https://avatars.githubusercontent.com/u/84640980?v=4" /> },
-  { id: 'settings', text: 'Settings', Icon: () => <span>⚙️</span> },
-  { id: 'notifications', text: 'Notifications', Icon: () => <span>🔔</span> },
+  { id: 'dailyRewards', text: 'Daily Rewards', Icon: () => <span>🎁</span> },
+  { id: 'tasks', text: 'Tasks', Icon: () => <span>📋</span> },
 ];
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [loadingStage, setLoadingStage] = useState(0); // 0: fetching user data, 1: verifying, 2: getting things ready
   const [progress, setProgress] = useState(0);
+  const [currentTab, setCurrentTab] = useState(tabs[0].id);
   const initData = useInitData();
 
   useEffect(() => {
@@ -49,10 +50,8 @@ export default function Home() {
           <Tabbar.Item
             key={id}
             text={text}
-            selected={id === 'profile'} // Set the initial selected tab here
-            onClick={() => {
-              // Handle tab click logic (navigate to different sections)
-            }}
+            selected={id === currentTab} // Set the selected tab here
+            onClick={() => setCurrentTab(id)}
           >
             <Icon />
           </Tabbar.Item>
