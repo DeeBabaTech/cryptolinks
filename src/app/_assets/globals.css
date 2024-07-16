@@ -8,6 +8,7 @@ body {
   min-height: 100vh;
   flex-direction: column; /* Ensures children are laid out vertically */
   margin: 0; /* Removes default margin */
+  min-height: var(--tg-viewport-height, 100vh);
 }
 
 /* Ensure that the root element takes the full height of the viewport */
