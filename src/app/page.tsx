@@ -1,29 +1,29 @@
-'use client';
+// Home.jsx
+'use client'
+import React, { useState, useEffect } from 'react';
+import TapToEarnTab from '../components/TapToEarnTab';
+import TaskTab from '../components/TaskTab';
+import StatsTab from '../components/StatsTab';
+import Spinner from '../components/Spinner';
+import { Avatar } from '@telegram-apps/telegram-ui';
+import { useInitData, User } from '@telegram-apps/sdk-react';
+import Profile from '../components/Profile'; // Import Profile component
 
-import { useEffect, useState } from 'react';
-import { Section, Cell, List, Tabbar, Spinner, Avatar } from '@telegram-apps/telegram-ui';
-import { useInitData, type User } from '@telegram-apps/sdk-react';
-
-// Define navigation tabs
-const tabs = [
-  { id: 'profile', text: 'Profile', Icon: () => <Avatar size={24} src="https://avatars.githubusercontent.com/u/84640980?v=4" /> },
-  { id: 'dailyRewards', text: 'Daily Rewards', Icon: () => <span style={{ fontSize: '24px' }} >🎁</span> },
-  { id: 'tasks', text: 'Tasks', Icon: () => <span style={{ fontSize: '24px' }}>📋</span> },
-];
-
-export default function Home() {
+const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loadingStage, setLoadingStage] = useState(0); // 0: fetching user data, 1: verifying, 2: getting things ready
   const [progress, setProgress] = useState(0);
-  const [currentTab, setCurrentTab] = useState(tabs[0].id);
+  const [currentTab, setCurrentTab] = useState('tapToEarn'); // Initialize currentTab with default tab
   const initData = useInitData();
 
+  // Effect to set user state when initData changes
   useEffect(() => {
     if (initData && initData.user) {
       setUser(initData.user);
     }
   }, [initData]);
 
+  // Effect to simulate loading stages
   useEffect(() => {
     if (loadingStage < 3) {
       const interval = setInterval(() => {
@@ -37,79 +37,61 @@ export default function Home() {
             return 0;
           }
         });
-      }, 3000); // Adjust the speed as necessary
+      }, 20); // Adjust the speed as necessary
       return () => clearInterval(interval);
     }
   }, [loadingStage]);
 
+  const tabs = [
+    { id: 'profile', text: 'Profile', Icon: () => <Avatar size={24} src="https://avatars.githubusercontent.com/u/84640980?v=4" /> },
+    { id: 'tapToEarn', text: 'Tap', Icon: () => <span style={{ fontSize: '24px' }}>🎁</span> },
+    { id: 'tasks', text: 'Tasks', Icon: () => <span style={{ fontSize: '24px' }}>📋</span> },
+    { id: 'stats', text: 'Stats', Icon: () => <span style={{ fontSize: '24px' }}>📊</span> },
+  ];
+
+  const renderTabContent = () => {
+    switch (currentTab) {
+      case 'profile':
+        return <Profile user={user} />;
+      case 'tapToEarn':
+        return <TapToEarnTab />;
+      case 'tasks':
+        return <TaskTab />;
+      case 'stats':
+        return <StatsTab />;
+      default:
+        return null;
+    }
+  };
+
+  const handleTabChange = (tabId: string) => {
+    setCurrentTab(tabId);
+  };
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Navigation Bar */}
-      <Tabbar>
-        {tabs.map(({ id, text, Icon }) => (
-          <Tabbar.Item
-            key={id}
-            text={text}
-            selected={id === currentTab} // Set the selected tab here
-            onClick={() => setCurrentTab(id)}
-          >
-            <Icon />
-          </Tabbar.Item>
-        ))}
-      </Tabbar>
-
-      {/* Main Content */}
-      <div className="flex-grow flex flex-col items-center justify-center">
-        {loadingStage < 3 && !user && (
-          <div className="flex items-center justify-center min-h-screen w-full">
-            <div className="text-center">
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: '100vh',
-                }}
-              >
-                <Spinner size="m" />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {user && loadingStage >= 3 && (
-          <div className="w-full mt-4">
-            {currentTab === 'profile' && (
-              <List>
-                <Section header={`Welcome, ${user.firstName}!`}>
-                  <Cell subtitle="Here are your details:">
-                    <div><strong>ID:</strong> {user.id}</div>
-                    <div><strong>Username:</strong> {user.username}</div>
-                    <div><strong>First Name:</strong> {user.firstName}</div>
-                    <div><strong>Last Name:</strong> {user.lastName}</div>
-                    <div><strong>Language Code:</strong> {user.languageCode}</div>
-                    <div><strong>Is Premium:</strong> {user.isPremium ? 'Yes' : 'No'}</div>
-                  </Cell>
-                </Section>
-              </List>
-            )}
-
-            {currentTab === 'dailyRewards' && (
-              <div className="text-center">
-                <h2>Daily Rewards</h2>
-                <p>Earn points by logging in daily!</p>
-              </div>
-            )}
-
-            {currentTab === 'tasks' && (
-              <div className="text-center">
-                <h2>Tasks</h2>
-                <p>Complete tasks to earn rewards!</p>
-              </div>
-            )}
-          </div>
-        )}
+    <div>
+      <div className="tab-content">
+        {renderTabContent()}
       </div>
+      <div className="bottom-navigation flex justify-around bg-gray-800 p-4 fixed bottom-0 left-0 right-0">
+        {tabs.map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => handleTabChange(tab.id)}
+            className={`flex items-center justify-center flex-col text-white ${currentTab === tab.id ? 'text-blue-500' : ''}`}
+          >
+            <tab.Icon />
+            <span className="text-xs mt-1">{tab.text}</span>
+          </button>
+        ))}
+      </div>
+      {loadingStage < 3 && (
+        <div className="loading-bar">
+          <div className="progress" style={{ width: `${progress}%` }}></div>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default Home;
