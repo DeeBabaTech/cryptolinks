@@ -7,8 +7,8 @@ import { useInitData, type User } from '@telegram-apps/sdk-react';
 // Define navigation tabs
 const tabs = [
   { id: 'profile', text: 'Profile', Icon: () => <Avatar size={24} src="https://avatars.githubusercontent.com/u/84640980?v=4" /> },
-  { id: 'dailyRewards', text: 'Daily Rewards', Icon: () => <span>🎁</span> },
-  { id: 'tasks', text: 'Tasks', Icon: () => <span>📋</span> },
+  { id: 'dailyRewards', text: 'Daily Rewards', Icon: () => <span style={{ fontSize: '24px' }} >🎁</span> },
+  { id: 'tasks', text: 'Tasks', Icon: () => <span style={{ fontSize: '24px' }}>📋</span> },
 ];
 
 export default function Home() {
@@ -37,7 +37,7 @@ export default function Home() {
             return 0;
           }
         });
-      }, 20); // Adjust the speed as necessary
+      }, 3000); // Adjust the speed as necessary
       return () => clearInterval(interval);
     }
   }, [loadingStage]);
@@ -78,18 +78,36 @@ export default function Home() {
         )}
 
         {user && loadingStage >= 3 && (
-          <List className="w-full mt-4">
-            <Section header={`Welcome, ${user.firstName}!`}>
-              <Cell subtitle="Here are your details:">
-                <div><strong>ID:</strong> {user.id}</div>
-                <div><strong>Username:</strong> {user.username}</div>
-                <div><strong>First Name:</strong> {user.firstName}</div>
-                <div><strong>Last Name:</strong> {user.lastName}</div>
-                <div><strong>Language Code:</strong> {user.languageCode}</div>
-                <div><strong>Is Premium:</strong> {user.isPremium ? 'Yes' : 'No'}</div>
-              </Cell>
-            </Section>
-          </List>
+          <div className="w-full mt-4">
+            {currentTab === 'profile' && (
+              <List>
+                <Section header={`Welcome, ${user.firstName}!`}>
+                  <Cell subtitle="Here are your details:">
+                    <div><strong>ID:</strong> {user.id}</div>
+                    <div><strong>Username:</strong> {user.username}</div>
+                    <div><strong>First Name:</strong> {user.firstName}</div>
+                    <div><strong>Last Name:</strong> {user.lastName}</div>
+                    <div><strong>Language Code:</strong> {user.languageCode}</div>
+                    <div><strong>Is Premium:</strong> {user.isPremium ? 'Yes' : 'No'}</div>
+                  </Cell>
+                </Section>
+              </List>
+            )}
+
+            {currentTab === 'dailyRewards' && (
+              <div className="text-center">
+                <h2>Daily Rewards</h2>
+                <p>Earn points by logging in daily!</p>
+              </div>
+            )}
+
+            {currentTab === 'tasks' && (
+              <div className="text-center">
+                <h2>Tasks</h2>
+                <p>Complete tasks to earn rewards!</p>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>
