@@ -19,16 +19,16 @@ const getLevel = (points) => {
 };
 
 const levels = [
-  { name: "Novice", icon: "🌱" },
-  { name: "Explorer", icon: "🌍" },
-  { name: "Contributor", icon: "🛠️" },
-  { name: "Influencer", icon: "🌟" },
-  { name: "Ambassador", icon: "🕊️" },
-  { name: "Champion", icon: "🏆" },
-  { name: "Master", icon: "🧙‍♂️" },
-  { name: "Hero", icon: "🦸‍♂️" },
-  { name: "Legend", icon: "🌠" },
-  { name: "Icon", icon: "🔱" }
+  { name: "Novice", icon: "🌱", points: 0 },
+  { name: "Explorer", icon: "🌍", points: 100 },
+  { name: "Contributor", icon: "🛠️", points: 200 },
+  { name: "Influencer", icon: "🌟", points: 300 },
+  { name: "Ambassador", icon: "🕊️", points: 400 },
+  { name: "Champion", icon: "🏆", points: 500 },
+  { name: "Master", icon: "🧙‍♂️", points: 600 },
+  { name: "Hero", icon: "🦸‍♂️", points: 700 },
+  { name: "Legend", icon: "🌠", points: 800 },
+  { name: "Icon", icon: "🔱", points: 900 }
 ];
 
 const Profile = ({ user }) => {
@@ -57,6 +57,9 @@ const Profile = ({ user }) => {
             >
               <span>{level.icon}</span>
               <span>{level.name}</span>
+              {level.points > userPoints && (
+                <span className="ml-auto text-xs text-gray-400">{level.points - userPoints} points to level up</span>
+              )}
             </div>
           ))}
         </div>
