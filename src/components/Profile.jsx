@@ -58,7 +58,7 @@ const Profile = ({ user }) => {
               <span>{level.icon}</span>
               <span>{level.name}</span>
               {level.points > userPoints && (
-                <span className="ml-auto text-xs text-gray-400">{level.points - userPoints} points to level up</span>
+                <span className="ml-auto text-xs text-gray-400">{level.points - userPoints} XP to level up</span>
               )}
             </div>
           ))}
@@ -119,12 +119,6 @@ const Profile = ({ user }) => {
       </div>
 
 
-  {/* Invite Button */}
-  <div className="mb-4">
-    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-      Invite More
-    </button>
-  </div>
 
   {/* Achievements */}
   <div className="mb-4">
