@@ -34,6 +34,7 @@ const levels = [
 const Profile = ({ user }) => {
   const userPoints = 450; // Replace with actual points
   const userStage = getLevel(userPoints);
+  const userInvites = 5; // Replace with actual number of invites
 
   const [selectedAvatar, setSelectedAvatar] = useState(user.photoUrl || '/avatars/default.png');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,6 +68,13 @@ const Profile = ({ user }) => {
     );
     setIsModalOpen(true);
   };
+
+  const handleCopyInvite = () => {
+    const inviteLink = `https://example.com/invite?user=${user.username}`;
+    navigator.clipboard.writeText(inviteLink);
+    alert("Invite link copied to clipboard!");
+  };
+
 
   const handleAvatarClick = () => {
     setModalContent(
@@ -113,7 +121,7 @@ const Profile = ({ user }) => {
         </div>
         <div className="text-gray-500 mb-2">@{user.username}</div>
         <div className="flex items-center text-lg font-bold text-blue-600 mb-2">
-          <span className="mr-2" onClick={handleLevelClick}>{userStage.icon}</span> {/* Level Icon */}
+          <span className="text-3xl mr-2" onClick={handleLevelClick}>{userStage.icon}</span> {/* Level Icon */}
           <span onClick={handleLevelClick}>{userStage.name}</span> {/* Level Name */}
         </div>
       </div>
@@ -121,18 +129,31 @@ const Profile = ({ user }) => {
 
 
   {/* Achievements */}
+  <div className=" rounded-lg shadow-md p-6 mb-6">
+  {/* Achievements */}
   <div className="mb-4">
     <div className="font-bold mb-2">Achievements</div>
-    <div>🏆 <strong>Points Earned:</strong> {userPoints}</div> {/* Replace with actual data */}
-    <div>🥇 <strong>Top Rank:</strong> #1</div> {/* Replace with actual data */}
+    <div className="flex items-center mb-2">
+      <span className="text-3xl mr-2">🏆</span>
+      <strong>Points Earned:</strong> {userPoints}
+    </div>
+    <div className="flex items-center mb-2">
+      <span className="text-3xl mr-2">🥇</span>
+      <strong>Top Rank:</strong> #1
+    </div>
+    <div className="flex items-center mb-2">
+      <span className="text-3xl mr-2">🎖️</span>
+      <strong>Completed Tasks:</strong> 25 {/* Replace with actual data */}
+    </div>
+    <div className="flex items-center">
+      <span className="text-3xl mr-2">🏅</span>
+      <strong>Challenges Won:</strong> 10 {/* Replace with actual data */}
+    </div>
   </div>
+</div>
 
-  {/* Recent Activity */}
-  <div>
-    <div className="font-bold mb-2">Recent Activity</div>
-    <div>✔️ Completed daily reward task</div> {/* Replace with actual data */}
-    <div>✔️ Followed new user @example</div> {/* Replace with actual data */}
-  </div>
+
+
 
   {/* Levels/Avatar Selection Modal */}
   {isModalOpen && (
