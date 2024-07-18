@@ -88,5 +88,9 @@ export function Root(props: PropsWithChildren) {
     <ErrorBoundary fallback={ErrorPage}>
       <RootInner {...props}/>
     </ErrorBoundary>
-  ) : <div className="root__loading">Loading</div>;
+  ) :  <div className="flex items-center bg-color-black justify-center min-h-screen">
+  <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-gray-800"></div>
+</div>;
 }
+
+ 
