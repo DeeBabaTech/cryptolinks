@@ -1,21 +1,19 @@
 // Home.jsx
-"use client";
-
-import React, { useState, useEffect } from "react";
-import TapToEarnTab from "../components/TapToEarnTab";
-import TaskTab from "../components/TaskTab";
-import StatsTab from "../components/StatsTab";
-import Spinner from "../components/Spinner";
-import { Avatar } from "@telegram-apps/telegram-ui";
-import { useInitData, User } from "@telegram-apps/sdk-react";
-import Profile from "../components/Profile"; // Import Profile component
-import Image from "next/image";
+'use client'
+import React, { useState, useEffect } from 'react';
+import TapToEarnTab from '../components/TapToEarnTab';
+import TaskTab from '../components/TaskTab';
+import StatsTab from '../components/StatsTab';
+import Spinner from '../components/Spinner';
+import { Avatar } from '@telegram-apps/telegram-ui';
+import { useInitData, User } from '@telegram-apps/sdk-react';
+import Profile from '../components/Profile'; // Import Profile component
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loadingStage, setLoadingStage] = useState(0); // 0: fetching user data, 1: verifying, 2: getting things ready
   const [progress, setProgress] = useState(0);
-  const [currentTab, setCurrentTab] = useState("tapToEarn"); // Initialize currentTab with default tab
+  const [currentTab, setCurrentTab] = useState('tapToEarn'); // Initialize currentTab with default tab
   const initData = useInitData();
 
   // Effect to set user state when initData changes
@@ -45,53 +43,21 @@ const Home: React.FC = () => {
   }, [loadingStage]);
 
   const tabs = [
-    {
-      id: "cryptolink",
-      text: "Cryptolink",
-      Icon: () => (
-        <div className='w-7'>
-          <Image src='/coineal.png' alt='' width={100} height={100} priority />
-        </div>
-      ),
-    },
-    {
-      id: "tapToEarn",
-      text: "Earn",
-      Icon: () => (
-        <div className='w-7'>
-          <Image src='/coineal.png' alt='' width={100} height={100} priority />
-        </div>
-      ),
-    },
-    {
-      id: "invite",
-      text: "Invite",
-      Icon: () => (
-        <div className='w-7'>
-          <Image src='/coineal.png' alt='' width={100} height={100} priority />
-        </div>
-      ),
-    },
-    {
-      id: "airdrop",
-      text: "Airdrops",
-      Icon: () => (
-        <div className='w-7'>
-          <Image src='/coineal.png' alt='' width={100} height={100} priority />
-        </div>
-      ),
-    },
+    { id: 'profile', text: 'Profile', Icon: () => <Avatar size={20} src="https://avatars.githubusercontent.com/u/84640980?v=4" /> },
+    { id: 'tapToEarn', text: 'Tap', Icon: () => <span style={{ fontSize: '24px' }}>🎁</span> },
+    { id: 'tasks', text: 'Tasks', Icon: () => <span style={{ fontSize: '24px' }}>📋</span> },
+    { id: 'stats', text: 'Stats', Icon: () => <span style={{ fontSize: '24px' }}>📊</span> },
   ];
 
   const renderTabContent = () => {
     switch (currentTab) {
-      case "cryptolink":
+      case 'profile':
         return <Profile user={user} />;
-      case "tapToEarn":
+      case 'tapToEarn':
         return <TapToEarnTab />;
-      case "invite":
+      case 'tasks':
         return <TaskTab />;
-      case "airdrop":
+      case 'stats':
         return <StatsTab />;
       default:
         return null;
@@ -103,27 +69,28 @@ const Home: React.FC = () => {
   };
 
   return (
-    <>
-      <div className='tab-content'>{renderTabContent()}</div>
-      <div className='bottom-navigation flex justify-around bg-[#2A522B] rounded-lg p-4 fixed bottom-0 left-0 right-0'>
-        {tabs.map((tab) => (
+    <div>
+      <div className="tab-content">
+        {renderTabContent()}
+      </div>
+      <div className="bottom-navigation flex justify-around bg-gray-800 p-4 fixed bottom-0 left-0 right-0">
+        {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
-            className={`flex items-center justify-center flex-col text-white gap-1 ${
-              currentTab === tab.id ? "text-blue-500" : ""
-            }`}>
+            className={`flex items-center justify-center flex-col text-white ${currentTab === tab.id ? 'text-blue-500' : ''}`}
+          >
             <tab.Icon />
-            <span className='text-xs mt-1'>{tab.text}</span>
+            <span className="text-xs mt-1">{tab.text}</span>
           </button>
         ))}
       </div>
       {loadingStage < 3 && (
-        <div className='loading-bar'>
-          <div className='progress' style={{ width: `${progress}%` }}></div>
+        <div className="loading-bar">
+          <div className="progress" style={{ width: `${progress}%` }}></div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
