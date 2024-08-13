@@ -43,7 +43,7 @@ const Home: React.FC = () => {
   }, [loadingStage]);
 
   const tabs = [
-    { id: 'profile', text: 'Profile', Icon: () => <Avatar size={26} src="https://avatars.githubusercontent.com/u/84640980?v=4" /> },
+    { id: 'profile', text: 'Profile', Icon: () => <Avatar size={20} src="https://avatars.githubusercontent.com/u/84640980?v=4" /> },
     { id: 'tapToEarn', text: 'Tap', Icon: () => <span style={{ fontSize: '24px' }}>🎁</span> },
     { id: 'tasks', text: 'Tasks', Icon: () => <span style={{ fontSize: '24px' }}>📋</span> },
     { id: 'stats', text: 'Stats', Icon: () => <span style={{ fontSize: '24px' }}>📊</span> },
