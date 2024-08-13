@@ -1,6 +1,6 @@
 // components/TapToEarnTab.jsx
 import { LinearProgress } from "@mui/material";
-import Image from "next/Image";
+import Image from "next/image";
 
 export default function TapToEarnTab() {
   return (
@@ -16,14 +16,15 @@ export default function TapToEarnTab() {
       <div>
         <div className='flex justify-between items-center mt-5 rounded-lg bg-[#000e1e] p-5'>
           <div className='flex items-center w-1/4'>
-            <Image
-              width={100}
-              height={100}
-              src='/coineal.png'
-              alt='coin'
-              className='w-10'
-              priority
-            />
+            <div className='w-10'>
+              <Image
+                width={100}
+                height={100}
+                src='/coineal.png'
+                alt='coin'
+                priority
+              />
+            </div>
             <div className='truncate ml-2'>Ademiluyi</div>
           </div>
           <div className='flex flex-col items-center relative before:absolute before:h-full before:bg-slate-400 before:w-0.5 before:-left-5 after:absolute after:-right-5 after:h-full after:bg-slate-400 after:w-0.5'>
@@ -36,14 +37,15 @@ export default function TapToEarnTab() {
           </div>
         </div>
         <div className='flex items-center justify-center gap-1 my-5'>
-          <Image
-            width={100}
-            height={100}
-            src='/coineal.png'
-            alt='png token'
-            className='w-10'
-            priority
-          />
+          <div className='w-10'>
+            <Image
+              width={100}
+              height={100}
+              src='/coineal.png'
+              alt='png token'
+              priority
+            />
+          </div>
           <div className='text-3xl font-bold'>180</div>
         </div>
         {/* Progress bar */}
@@ -58,39 +60,34 @@ export default function TapToEarnTab() {
           sx={{ height: 10 }}
         />
         {/* Coin tap */}
-        <div className='flex justify-center my-10'>
-          <Image
-            width={100}
-            height={100}
-            src='/token.png'
-            alt=''
-            className='w-3/4'
-            priority
-          />
+        <div className='flex justify-center my-10 w-full'>
+            <Image width={300} height={300} src='/token.png' alt='' priority />
         </div>
         {/* Bottom */}
         <div className='flex justify-between items-center text-sm'>
           <div className='text-normal'>1000/1000</div>
           <div className='flex items-center gap-1 rounded-full bg-[#2A522B] px-3 py-2'>
-            <Image
-              width={100}
-              height={100}
-              src='/coineal.png'
-              alt=''
-              className='w-10'
-              priority
-            />
+            <div className='w-8'>
+              <Image
+                width={100}
+                height={100}
+                src='/coineal.png'
+                alt=''
+                priority
+              />
+            </div>
             <div>Earn More</div>
           </div>
           <div className='flex items-center gap-1 rounded-full bg-[#2A522B] px-3 py-2'>
-            <Image
-              width={100}
-              height={100}
-              src='/coineal.png'
-              alt=''
-              className='w-10'
-              priority
-            />
+            <div className='w-8'>
+              <Image
+                width={100}
+                height={100}
+                src='/coineal.png'
+                alt=''
+                priority
+              />
+            </div>
             <div>Boost</div>
           </div>
         </div>

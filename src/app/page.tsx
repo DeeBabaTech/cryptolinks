@@ -1,5 +1,6 @@
 // Home.jsx
 "use client";
+
 import React, { useState, useEffect } from "react";
 import TapToEarnTab from "../components/TapToEarnTab";
 import TaskTab from "../components/TaskTab";
@@ -48,52 +49,36 @@ const Home: React.FC = () => {
       id: "cryptolink",
       text: "Cryptolink",
       Icon: () => (
-        <Image
-          src='/coineal.png'
-          alt=''
-          width={100}
-          height={100}
-          className='w-7'
-        />
+        <div className='w-7'>
+          <Image src='/coineal.png' alt='' width={100} height={100} priority />
+        </div>
       ),
     },
     {
       id: "tapToEarn",
       text: "Earn",
       Icon: () => (
-        <Image
-          src='/coineal.png'
-          alt=''
-          width={100}
-          height={100}
-          className='w-7'
-        />
+        <div className='w-7'>
+          <Image src='/coineal.png' alt='' width={100} height={100} priority />
+        </div>
       ),
     },
     {
       id: "invite",
       text: "Invite",
       Icon: () => (
-        <Image
-          src='/coineal.png'
-          alt=''
-          width={100}
-          height={100}
-          className='w-7'
-        />
+        <div className='w-7'>
+          <Image src='/coineal.png' alt='' width={100} height={100} priority />
+        </div>
       ),
     },
     {
       id: "airdrop",
       text: "Airdrops",
       Icon: () => (
-        <Image
-          src='/coineal.png'
-          alt=''
-          width={100}
-          height={100}
-          className='w-7'
-        />
+        <div className='w-7'>
+          <Image src='/coineal.png' alt='' width={100} height={100} priority />
+        </div>
       ),
     },
   ];
