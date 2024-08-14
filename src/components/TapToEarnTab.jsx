@@ -158,31 +158,30 @@ export default function TapToEarnTab() {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-black p-6 rounded-lg shadow-lg max-w-md w-full text-gray-900">
-            <h2 className="text-xl font-bold mb-4">All Ranks</h2>
-            <button
-        className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="bg-gray-900 p-6 rounded-lg shadow-lg max-w-md w-full text-gray-300 relative">
+      <button
+        className="absolute top-4 right-4 text-gray-400 hover:text-gray-100 transition"
         onClick={closeModal}
       >
         &times;
       </button>
-            <div className="grid gap-2">
-              {ranks.map((rank, index) => (
-                <div 
-                  key={index} 
-                  className={`p-2 rounded-md flex items-center space-x-2 ${rank.name === userLevel.name ? 'bg-blue-500 text-white' : 'bg-gray-800 text-white'}`}
-                >
-                  <span>{rank.icon}</span>
-                  <span>{rank.name}</span>
-                  <span className="ml-auto text-xs text-gray-400">{rank.points} XP</span>
-                </div>
-              ))}
-            </div>
-           
+      <h2 className="text-xl font-bold mb-4">All Ranks</h2>
+      <div className="grid gap-2">
+        {ranks.map((rank, index) => (
+          <div 
+            key={index} 
+            className={`p-2 rounded-md flex items-center space-x-2 ${rank.name === userLevel.name ? 'bg-blue-500 text-white' : 'bg-gray-800 text-white'}`}
+          >
+            <span>{rank.icon}</span>
+            <span>{rank.name}</span>
+            <span className="ml-auto text-xs text-gray-400">{rank.points} XP</span>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
+    </div>
+  </div>
+)}
 
       {/* Avatar section with click handling and spinning animation */}
       <div className="relative rounded-lg p-4 mb-8 cursor-pointer">
