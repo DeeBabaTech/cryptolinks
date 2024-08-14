@@ -159,8 +159,14 @@ export default function TapToEarnTab() {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full text-gray-900">
+          <div className="bg-black p-6 rounded-lg shadow-lg max-w-md w-full text-gray-900">
             <h2 className="text-xl font-bold mb-4">All Ranks</h2>
+            <button
+        className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"
+        onClick={closeModal}
+      >
+        &times;
+      </button>
             <div className="grid gap-2">
               {ranks.map((rank, index) => (
                 <div 
@@ -173,12 +179,7 @@ export default function TapToEarnTab() {
                 </div>
               ))}
             </div>
-            <button
-              className="mt-4 py-2 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
-              onClick={closeModal}
-            >
-              Close
-            </button>
+           
           </div>
         </div>
       )}
