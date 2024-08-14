@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function TapToEarnTab({ user }) {
   return (
     <div className='p-5 h-[80%]'>
-      <div className='flex justify-between items-center rounded-lg bg-[#000e1e] py-3 px-4'>
+      <div className='flex justify-between items-center rounded-lg bg-[#002247] py-3 px-4'>
         <div className='flex items-center w-1/4'>
           <div className='w-10'>
             <Image
