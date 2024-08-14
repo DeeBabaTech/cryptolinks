@@ -26,6 +26,7 @@ export default function TapToEarnTab() {
   const [canClaim, setCanClaim] = useState(false);
   const [lastClaimTime, setLastClaimTime] = useState(null);
   const [timeLeft, setTimeLeft] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const userLevel = getLevel(totalPoints);
 
@@ -116,17 +117,60 @@ export default function TapToEarnTab() {
     return `${hrs}h ${mins}m`;
   };
 
+  const userLevel = ranks.find(rank => totalPoints >= rank.points)
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-900 text-white font-sans">
+ <div className="flex flex-col items-center justify-start min-h-screen bg-gray-900 text-white font-sans">
       {/* Display total points */}
       <div className="text-center mt-8 mb-4">
         <h2 className="text-4xl font-bold mb-2">{totalPoints} Points</h2>
         <p className="text-lg mb-4">Tap the avatar to collect rewards!</p>
-        <div className="flex items-center justify-center space-x-2 mb-2">
-          <span className="text-2xl">{userLevel.icon}</span>
-          <span className="text-lg font-semibold">{userLevel.name}</span>
+        
+        {/* User Level Display with Click to Open Modal */}
+        <div 
+          className="flex items-center justify-center space-x-2 mb-2 cursor-pointer"
+          onClick={openModal}
+        >
+          <span className="text-2xl">{userLevel?.icon}</span>
+          <span className="text-lg font-semibold">{userLevel?.name}</span>
         </div>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full text-gray-900">
+            <h2 className="text-xl font-bold mb-4">All Ranks</h2>
+            <div className="grid gap-2">
+              {ranks.map((rank, index) => (
+                <div 
+                  key={index} 
+                  className={`p-2 rounded-md flex items-center space-x-2 ${rank.name === userLevel.name ? 'bg-blue-500 text-white' : 'bg-gray-800 text-white'}`}
+                >
+                  <span>{rank.icon}</span>
+                  <span>{rank.name}</span>
+                  <span className="ml-auto text-xs text-gray-400">{rank.points} XP</span>
+                </div>
+              ))}
+            </div>
+            <button
+              className="mt-4 py-2 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
+              onClick={closeModal}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
 
       {/* Avatar section with click handling and spinning animation */}
       <div className="relative rounded-lg p-4 mb-8 cursor-pointer">
@@ -163,16 +207,6 @@ export default function TapToEarnTab() {
           disabled={!canClaim}
         >
           {canClaim ? 'Claim Reward' : `Come back in ${formatTimeLeft(timeLeft)}`}
-        </button>
-      </div>
-
-      {/* Button to view all ranks */}
-      <div className="flex items-center justify-center">
-        <button
-          className="py-2 px-4 rounded-lg bg-gray-800 text-white hover:bg-gray-700"
-          onClick={() => alert('Here you can display a modal with all ranks')}
-        >
-          View All Ranks
         </button>
       </div>
     </div>
