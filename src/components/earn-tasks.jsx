@@ -155,7 +155,7 @@ export default function EarnTasks() {
         <div className='w-20'>
           <Image width={100} height={100} src='/tasks.svg' alt='task icon' />
         </div>
-        <div className='flex flex-col items-center gap-2 w-1/4'>
+        <div className='flex flex-col items-center gap-2.5 w-2/5'>
           <p>Tasks: 0/50</p>
           <LinearProgress
             variant='determinate'
