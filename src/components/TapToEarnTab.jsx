@@ -1,9 +1,23 @@
-// components/TapToEarnTab.jsx
 "use client"; // This is a client component 👈🏽
 import { useState, useEffect } from 'react';
 
+// Constants
 const RESET_TIME_HOURS = 12; // Reset time in hours
 const POINTS_PER_CLAIM = 5; // Points per claim
+
+// Function to determine level based on points
+const getLevel = (points) => {
+  if (points >= 900) return { name: "Satoshi", icon: "🔱" };
+  if (points >= 800) return { name: "Whale", icon: "🐋" };
+  if (points >= 700) return { name: "Validator", icon: "🔗" };
+  if (points >= 600) return { name: "Miner", icon: "⛏️" };
+  if (points >= 500) return { name: "Trader", icon: "📈" };
+  if (points >= 400) return { name: "Hodler", icon: "💎" };
+  if (points >= 300) return { name: "Enthusiast", icon: "🚀" };
+  if (points >= 200) return { name: "Airdropper", icon: "✈️" };
+  if (points >= 100) return { name: "Explorer", icon: "🌍" };
+  return { name: "Newbie", icon: "🌱" };
+};
 
 export default function TapToEarnTab() {
   const [totalPoints, setTotalPoints] = useState(0); // State for total points
@@ -12,6 +26,8 @@ export default function TapToEarnTab() {
   const [canClaim, setCanClaim] = useState(false);
   const [lastClaimTime, setLastClaimTime] = useState(null);
   const [timeLeft, setTimeLeft] = useState(null);
+
+  const userLevel = getLevel(totalPoints);
 
   useEffect(() => {
     const storedPoints = localStorage.getItem('totalPoints'); // Retrieve total points
@@ -103,9 +119,13 @@ export default function TapToEarnTab() {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-gray-900 text-white font-sans">
       {/* Display total points */}
-      <div className="text-center mt-8 mb-12">
+      <div className="text-center mt-8 mb-4">
         <h2 className="text-4xl font-bold mb-2">{totalPoints} Points</h2>
         <p className="text-lg mb-4">Tap the avatar to collect rewards!</p>
+        <div className="flex items-center justify-center space-x-2 mb-2">
+          <span className="text-2xl">{userLevel.icon}</span>
+          <span className="text-lg font-semibold">{userLevel.name}</span>
+        </div>
       </div>
 
       {/* Avatar section with click handling and spinning animation */}
@@ -124,25 +144,35 @@ export default function TapToEarnTab() {
       </div>
 
       {/* Token collection progress */}
-     <div className="flex items-center justify-center w-full mb-8">
-  <div className="bg-gray-800 w-64 rounded-full h-8 overflow-hidden relative">
-    <div
-      className="bg-blue-500 h-full text-center text-white font-bold absolute inset-y-0 left-0"
-      style={{ width: `${progressPercentage}%` }}
-    >
-        {progressPercentage.toFixed(2)}%
-    </div>
-  </div>
-</div>
+      <div className="flex items-center justify-center w-full mb-8">
+        <div className="bg-gray-800 w-64 rounded-full h-8 overflow-hidden relative">
+          <div
+            className="bg-blue-500 h-full text-center text-white font-bold absolute inset-y-0 left-0"
+            style={{ width: `${progressPercentage}%` }}
+          >
+            {progressPercentage.toFixed(2)}%
+          </div>
+        </div>
+      </div>
 
       {/* Claim Reward button */}
-      <div className="flex flex-col items-center justify-center text-center">
+      <div className="flex flex-col items-center justify-center text-center mb-8">
         <button
           className={`py-2 px-4 rounded-lg focus:outline-none ${canClaim ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'bg-gray-500 text-gray-300'}`}
           onClick={handleClaim}
           disabled={!canClaim}
         >
           {canClaim ? 'Claim Reward' : `Come back in ${formatTimeLeft(timeLeft)}`}
+        </button>
+      </div>
+
+      {/* Button to view all ranks */}
+      <div className="flex items-center justify-center">
+        <button
+          className="py-2 px-4 rounded-lg bg-gray-800 text-white hover:bg-gray-700"
+          onClick={() => alert('Here you can display a modal with all ranks')}
+        >
+          View All Ranks
         </button>
       </div>
     </div>
