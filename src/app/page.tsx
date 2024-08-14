@@ -10,12 +10,13 @@ import { Avatar } from "@telegram-apps/telegram-ui";
 import { useInitData, User } from "@telegram-apps/sdk-react";
 import Profile from "../components/Profile"; // Import Profile component
 import Image from "next/image";
+import EarnTasks from "@/components/earn-tasks";
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loadingStage, setLoadingStage] = useState(0); // 0: fetching user data, 1: verifying, 2: getting things ready
   const [progress, setProgress] = useState(0);
-  const [currentTab, setCurrentTab] = useState("tapToEarn"); // Initialize currentTab with default tab
+  const [currentTab, setCurrentTab] = useState("cryptolink"); // Initialize currentTab with default tab
   const initData = useInitData();
 
   // Effect to set user state when initData changes
@@ -50,7 +51,7 @@ const Home: React.FC = () => {
       text: "Cryptolink",
       Icon: () => (
         <div className='w-7'>
-          <Image src='/coineal.png' alt='' width={100} height={100} priority />
+          <Image src='/coineal.svg' alt='' width={100} height={100} priority />
         </div>
       ),
     },
@@ -59,7 +60,7 @@ const Home: React.FC = () => {
       text: "Earn",
       Icon: () => (
         <div className='w-7'>
-          <Image src='/coineal.png' alt='' width={100} height={100} priority />
+          <Image src='/earn.svg' alt='' width={100} height={100} priority />
         </div>
       ),
     },
@@ -68,7 +69,7 @@ const Home: React.FC = () => {
       text: "Invite",
       Icon: () => (
         <div className='w-7'>
-          <Image src='/coineal.png' alt='' width={100} height={100} priority />
+          <Image src='/axe.svg' alt='' width={100} height={100} priority />
         </div>
       ),
     },
@@ -77,7 +78,7 @@ const Home: React.FC = () => {
       text: "Airdrops",
       Icon: () => (
         <div className='w-7'>
-          <Image src='/coineal.png' alt='' width={100} height={100} priority />
+          <Image src='/coineal.svg' alt='' width={100} height={100} priority />
         </div>
       ),
     },
@@ -86,9 +87,9 @@ const Home: React.FC = () => {
   const renderTabContent = () => {
     switch (currentTab) {
       case "cryptolink":
-        return <Profile user={user} />;
+        return <TapToEarnTab user={user} />;
       case "tapToEarn":
-        return <TapToEarnTab />;
+        return <EarnTasks />;
       case "invite":
         return <TaskTab />;
       case "airdrop":
@@ -105,13 +106,13 @@ const Home: React.FC = () => {
   return (
     <>
       <div className='tab-content'>{renderTabContent()}</div>
-      <div className='bottom-navigation flex justify-around bg-[#2A522B] rounded-lg p-4 fixed bottom-0 left-0 right-0'>
+      <div className='w-[96%] flex justify-around bg-[#2A522B] bg-opacity-50 backdrop-blur-sm rounded-lg p-4 fixed bottom-0 left-[2%]'>
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
             className={`flex items-center justify-center flex-col text-white gap-1 ${
-              currentTab === tab.id ? "text-blue-500" : ""
+              currentTab === tab.id ? "" : "opacity-50"
             }`}>
             <tab.Icon />
             <span className='text-xs mt-1'>{tab.text}</span>

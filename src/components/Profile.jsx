@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { List, Avatar } from '@telegram-apps/telegram-ui';
-import AvatarSelector from './AvatarSelector';
-import Modal from './Modal';
+import React, { useState } from "react";
+import { List, Avatar } from "@telegram-apps/telegram-ui";
+import AvatarSelector from "./AvatarSelector";
+import Modal from "./Modal";
 
 // Function to determine level based on points
 // Array of all levels
@@ -28,7 +28,7 @@ const levels = [
   { name: "Master", icon: "🧙‍♂️", points: 600 },
   { name: "Hero", icon: "🦸‍♂️", points: 700 },
   { name: "Legend", icon: "🌠", points: 800 },
-  { name: "Icon", icon: "🔱", points: 900 }
+  { name: "Icon", icon: "🔱", points: 900 },
 ];
 
 const Profile = ({ user }) => {
@@ -36,7 +36,9 @@ const Profile = ({ user }) => {
   const userStage = getLevel(userPoints);
   const userInvites = 5; // Replace with actual number of invites
 
-  const [selectedAvatar, setSelectedAvatar] = useState(user.photoUrl || '/avatars/default.png');
+  const [selectedAvatar, setSelectedAvatar] = useState(
+    user.photoUrl || "/avatars/default.png"
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
@@ -49,17 +51,22 @@ const Profile = ({ user }) => {
   const handleLevelClick = () => {
     setModalContent(
       <div>
-        <div className="font-bold mb-4">All Levels</div>
-        <div className="grid gap-2">
+        <div className='font-bold mb-4'>All Levels</div>
+        <div className='grid gap-2'>
           {levels.map((level, index) => (
-            <div 
-              key={index} 
-              className={`p-2 rounded-md flex items-center space-x-2 ${level.name === userStage.name ? 'bg-blue-500 text-white' : 'bg-gray-800 text-white'}`}
-            >
+            <div
+              key={index}
+              className={`p-2 rounded-md flex items-center space-x-2 ${
+                level.name === userStage.name
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-800 text-white"
+              }`}>
               <span>{level.icon}</span>
               <span>{level.name}</span>
               {level.points > userPoints && (
-                <span className="ml-auto text-xs text-gray-400">{level.points - userPoints} XP to level up</span>
+                <span className='ml-auto text-xs text-gray-400'>
+                  {level.points - userPoints} XP to level up
+                </span>
               )}
             </div>
           ))}
@@ -75,91 +82,88 @@ const Profile = ({ user }) => {
     alert("Invite link copied to clipboard!");
   };
 
-
   const handleAvatarClick = () => {
-    setModalContent(
-      <AvatarSelector onSelect={handleAvatarSelect} />
-    );
+    setModalContent(<AvatarSelector onSelect={handleAvatarSelect} />);
     setIsModalOpen(true);
   };
 
-  return(
-  <List className="flex flex-col w-full mt-4 p-4 shadow-md rounded-lg">
-  <div className="flex items-center mb-4">
-    {/* Profile Avatar */}
-    <div className="relative mr-4" onClick={handleAvatarClick}>
-      <Avatar
-        className="animated-avatar cursor-pointer border-2 border-gray-300 rounded-full"
-        fallbackIcon={<span>👤</span>}
-        size={96}
-        src={selectedAvatar}
-      />
-      {user.isPremium && (
-        <div className="absolute top-0 right-0 bg-blue-500 text-white rounded-full p-1 text-xs">
-          ⭐
+  return (
+    <List className='flex flex-col w-full mt-4 p-4 shadow-md rounded-lg'>
+      <div className='flex items-center mb-4'>
+        {/* Profile Avatar */}
+        <div className='relative mr-4' onClick={handleAvatarClick}>
+          <Avatar
+            className='animated-avatar cursor-pointer border-2 border-gray-300 rounded-full'
+            fallbackIcon={<span>👤</span>}
+            size={96}
+            src={selectedAvatar}
+          />
+          {user.isPremium && (
+            <div className='absolute top-0 right-0 bg-blue-500 text-white rounded-full p-1 text-xs'>
+              ⭐
+            </div>
+          )}
         </div>
-      )}
-    </div>
 
-    {/* Follow Information */}
-    <div className="flex space-x-8">
-      <div className="text-center">
-        <div className="font-bold">Followers</div>
-        <div className="text-gray-500">18.8M</div> {/* Replace with actual data */}
+        {/* Follow Information */}
+        <div className='flex space-x-8'>
+          <div className='text-center'>
+            <div className='font-bold'>Followers</div>
+            <div className='text-gray-500'>18.8M</div>{" "}
+            {/* Replace with actual data */}
+          </div>
+          <div className='text-center'>
+            <div className='font-bold'>Following</div>
+            <div className='text-gray-500'>350</div>{" "}
+            {/* Replace with actual data */}
+          </div>
+        </div>
       </div>
-      <div className="text-center">
-        <div className="font-bold">Following</div>
-        <div className="text-gray-500">350</div> {/* Replace with actual data */}
-      </div>
-    </div>
-  </div>
- {/* User Details */}
-      <div className="mb-4">
-        <div className="text-lg font-bold mb-1">
+      {/* User Details */}
+      <div className='mb-4'>
+        <div className='text-lg font-bold mb-1'>
           {user.firstName} {user.lastName}
-          {user.isPremium && <span className="text-blue-500"> ⭐</span>}
+          {user.isPremium && <span className='text-blue-500'> ⭐</span>}
         </div>
-        <div className="text-gray-500 mb-2">@{user.username}</div>
-        <div className="flex items-center text-lg font-bold text-blue-600 mb-2">
-          <span className="text-3xl mr-2" onClick={handleLevelClick}>{userStage.icon}</span> {/* Level Icon */}
-          <span onClick={handleLevelClick}>{userStage.name}</span> {/* Level Name */}
+        <div className='text-gray-500 mb-2'>@{user.username}</div>
+        <div className='flex items-center text-lg font-bold text-blue-600 mb-2'>
+          <span className='text-3xl mr-2' onClick={handleLevelClick}>
+            {userStage.icon}
+          </span>{" "}
+          {/* Level Icon */}
+          <span onClick={handleLevelClick}>{userStage.name}</span>{" "}
+          {/* Level Name */}
         </div>
       </div>
 
+      {/* Achievements */}
+      <div className=' rounded-lg shadow-md p-6 mb-6'>
+        {/* Achievements */}
+        <div className='mb-4'>
+          <div className='font-bold mb-2'>Achievements</div>
+          <div className='flex items-center mb-2'>
+            <span className='text-3xl mr-2'>🏆</span>
+            <strong>Points Earned:</strong> {userPoints}
+          </div>
+          <div className='flex items-center mb-2'>
+            <span className='text-3xl mr-2'>🥇</span>
+            <strong>Top Rank:</strong> #1
+          </div>
+          <div className='flex items-center mb-2'>
+            <span className='text-3xl mr-2'>🎖️</span>
+            <strong>Completed Tasks:</strong> 25{" "}
+            {/* Replace with actual data */}
+          </div>
+          <div className='flex items-center'>
+            <span className='text-3xl mr-2'>🏅</span>
+            <strong>Challenges Won:</strong> 10 {/* Replace with actual data */}
+          </div>
+        </div>
+      </div>
 
-
-  {/* Achievements */}
-  <div className=" rounded-lg shadow-md p-6 mb-6">
-  {/* Achievements */}
-  <div className="mb-4">
-    <div className="font-bold mb-2">Achievements</div>
-    <div className="flex items-center mb-2">
-      <span className="text-3xl mr-2">🏆</span>
-      <strong>Points Earned:</strong> {userPoints}
-    </div>
-    <div className="flex items-center mb-2">
-      <span className="text-3xl mr-2">🥇</span>
-      <strong>Top Rank:</strong> #1
-    </div>
-    <div className="flex items-center mb-2">
-      <span className="text-3xl mr-2">🎖️</span>
-      <strong>Completed Tasks:</strong> 25 {/* Replace with actual data */}
-    </div>
-    <div className="flex items-center">
-      <span className="text-3xl mr-2">🏅</span>
-      <strong>Challenges Won:</strong> 10 {/* Replace with actual data */}
-    </div>
-  </div>
-</div>
-
-
-
-
-  {/* Levels/Avatar Selection Modal */}
-  {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          {modalContent}
-        </Modal>
+      {/* Levels/Avatar Selection Modal */}
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>{modalContent}</Modal>
       )}
     </List>
   );
